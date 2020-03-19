@@ -1,11 +1,33 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Accounts{% endblock %}
+{% block title %}New Accounts
+{% endblock %}
 
 {% block body %}
-    <h1>Create new Accounts</h1>
+	<h1>Create new Accounts</h1>
 
-    {{ include('accounts/_form.html.twig') }}
+	{{ include('accounts/_form.html.twig') }}
 
-    <a href="{{ path('accounts_index') }}">back to list</a>
+	<a href="{{ path('accounts_index') }}">back to list</a>
+
+	<script>
+
+		$(function () {
+            var availableNames = [
+                {% for account in accounts %}
+                    "{{ account.name }}",
+                {% endfor %}
+            ];
+        $("#accounts_name").autocomplete({source: availableNames });
+
+            var availableAdresses = [
+                {% for account in accounts %}
+                    "{{ account.address }}",
+                {% endfor %}
+            ];
+        $("#accounts_address").autocomplete({source: availableAdresses });
+        });
+
+	</script>
+
 {% endblock %}

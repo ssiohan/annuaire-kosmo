@@ -36,6 +36,10 @@ class AccountsController extends AbstractController
         $account = new Accounts();
         $form = $this->createForm(AccountsType::class, $account);
         $form->handleRequest($request);
+        $accounts = $this->getDoctrine()
+        ->getRepository(Accounts::class)
+        ->findAll();
+        // dd($accounts);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -46,6 +50,7 @@ class AccountsController extends AbstractController
         }
 
         return $this->render('accounts/new.html.twig', [
+            'accounts' => $accounts,
             'account' => $account,
             'form' => $form->createView(),
         ]);
